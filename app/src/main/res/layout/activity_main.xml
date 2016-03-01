@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/bg_login"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+    <LinearLayout
+
+
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp" >
+
+        <Button
+            android:id="@+id/NewMapBtn"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:background="#a1bcb3"
+            android:text="New Map"
+            android:textColor="#fdfcfc"
+            android:elevation="10dp"
+            android:textStyle="bold"
+            android:textSize="30dp" />
+
+        <Button
+            android:id="@+id/SavedMapBtn"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:background="#a1bcb3"
+
+            android:text="Saved Maps"
+            android:textColor="#fefdfd"
+            android:elevation="10dp"
+            android:textStyle="bold"
+            android:textSize="30dp" />
+
+
+
+        <Button
+            android:id="@+id/GroupsBtn"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:background="#a1bcb3"
+
+            android:text="Groups"
+            android:textColor="#fdfcfc"
+            android:elevation="10dp"
+            android:textStyle="bold"
+            android:textSize="30dp" />
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>
+
