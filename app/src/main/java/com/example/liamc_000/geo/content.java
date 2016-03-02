@@ -46,6 +46,14 @@ public class content extends Activity {
             }
         });
 
+        groups.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(v.getContext(), group.class);      //intent to start the registration page
+                startActivityForResult(intent, 0);
+            }
+        });
 
 
 
