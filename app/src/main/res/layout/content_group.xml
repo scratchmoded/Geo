@@ -16,5 +16,6 @@
         android:id="@+id/usersListView"
         android:layout_gravity="center_horizontal"
         android:textColor="#fdfcfc"
-        />
+        android:clickable="false"
+        android:contextClickable="false" />
 </LinearLayout>

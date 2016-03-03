@@ -48,6 +48,18 @@ public class group extends AppCompatActivity {
                             R.layout.user_list_item, names);
                     usersListView.setAdapter(namesArrayAdapter);
 
+                    usersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> a, View v, int i, long l) {
+
+
+
+                        }
+                    });
+
+
+
+
 
 
                 } else {
