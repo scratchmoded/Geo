@@ -1,12 +1,19 @@
 package com.example.liamc_000.geo;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -24,7 +31,7 @@ public class MapsActivity extends AppCompatActivity
         implements
         OnMyLocationButtonClickListener,
         OnMapReadyCallback,
-        ActivityCompat.OnRequestPermissionsResultCallback {
+        ActivityCompat.OnRequestPermissionsResultCallback,GoogleMap.OnMapClickListener,GoogleMap.OnMapLongClickListener,GoogleMap.OnMarkerClickListener {
 
     /**
      * Request code for location permission request.
@@ -41,6 +48,10 @@ public class MapsActivity extends AppCompatActivity
 
     private GoogleMap mMap;
 
+    boolean markerClicked;
+    PolylineOptions rectOptions;
+    Polyline polyline;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +60,15 @@ public class MapsActivity extends AppCompatActivity
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+       /*
+        mMap.setOnMapClickListener(this);
+        mMap.setOnMapLongClickListener(this);
+        mMap.setOnMarkerClickListener(this);
+        markerClicked = false;
+        */
+
+
     }
 
     @Override
@@ -58,6 +78,10 @@ public class MapsActivity extends AppCompatActivity
         mMap.setOnMyLocationButtonClickListener(this);
         enableMyLocation();
     mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        mMap.setOnMapClickListener(this);
+        mMap.setOnMapLongClickListener(this);
+        mMap.setOnMarkerClickListener(this);
+        markerClicked = false;
 
     }
 
@@ -120,4 +144,42 @@ public class MapsActivity extends AppCompatActivity
                 .newInstance(true).show(getSupportFragmentManager(), "dialog");
     }
 
+    @Override
+    public void onMapClick(LatLng point) {
+            mMap.animateCamera(CameraUpdateFactory.newLatLng(point));
+
+        markerClicked = false;
+    }
+
+    @Override
+    public void onMapLongClick(LatLng point) {
+        mMap.addMarker(new MarkerOptions().position(point).title(point.toString()));
+
+        markerClicked = false;
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        if(markerClicked){
+
+            if(polyline != null){
+                polyline.remove();
+                polyline = null;
+            }
+
+            rectOptions.add(marker.getPosition());
+            rectOptions.color(Color.RED);
+            polyline = mMap.addPolyline(rectOptions);
+        }else{
+            if(polyline != null){
+                polyline.remove();
+                polyline = null;
+            }
+
+            rectOptions = new PolylineOptions().add(marker.getPosition());
+            markerClicked = true;
+        }
+
+        return true;
+    }
 }
