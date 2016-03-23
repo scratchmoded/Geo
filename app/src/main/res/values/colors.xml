@@ -484,4 +484,6 @@
     <color name="btn_login_bg">#eceef1</color>
     <color name="lbl_name">#333333</color>
     <color name="btn_logut_bg">#ff6861</color>
+    <color name="fill_color">#e1f5f3</color>
+    <color name="stroke_color">#b3e5fc</color>
 </resources>

@@ -8,6 +8,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polygon;
+import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
@@ -20,6 +22,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 /**
  * This demo shows how GMS Location can be used to check for changes to the users location.  The
@@ -45,7 +49,7 @@ public class MapsActivity extends AppCompatActivity
      * {@link #onRequestPermissionsResult(int, String[], int[])}.
      */
     private boolean mPermissionDenied = false;
-
+    private ArrayList<LatLng> arrayPoints = null;
     private GoogleMap mMap;
 
     boolean markerClicked;
@@ -56,7 +60,7 @@ public class MapsActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-
+        arrayPoints = new ArrayList<LatLng>();
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -81,9 +85,10 @@ public class MapsActivity extends AppCompatActivity
         mMap.setOnMapClickListener(this);
         mMap.setOnMapLongClickListener(this);
         mMap.setOnMarkerClickListener(this);
+
         markerClicked = false;
 
-    }
+ }
 
     /**
      * Enables the My Location layer if the fine location permission has been granted.
@@ -146,21 +151,74 @@ public class MapsActivity extends AppCompatActivity
 
     @Override
     public void onMapClick(LatLng point) {
-            mMap.animateCamera(CameraUpdateFactory.newLatLng(point));
 
-        markerClicked = false;
     }
+
+
+
 
     @Override
     public void onMapLongClick(LatLng point) {
         mMap.addMarker(new MarkerOptions().position(point).title(point.toString()));
-
+        arrayPoints.add(point);
         markerClicked = false;
     }
 
+    public void countPolygonPoints() {
+        if (arrayPoints.size() >= 3) {
+            markerClicked = true;
+            PolygonOptions polygonOptions = new PolygonOptions();
+            polygonOptions.addAll(arrayPoints);
+            polygonOptions.strokeColor(Color.BLUE);
+            polygonOptions.strokeWidth(7);
+            polygonOptions.fillColor(0x4F00FFFF);
+
+            //polygonOptions.fillColor(Color.CYAN);
+            Polygon polygon = mMap.addPolygon(polygonOptions);
+        }
+    }
+
+
+    //Read more: http://www.androidhub4you.com/2013/07/draw-polygon-in-google-map-version-2.html#ixzz434BZyHce
+
+
+
     @Override
     public boolean onMarkerClick(Marker marker) {
-        if(markerClicked){
+
+        System.out.println("Marker lat long=" + marker.getPosition());
+        System.out.println("First postion check" + arrayPoints.get(0));
+        System.out
+                .println("**********All arrayPoints***********" + arrayPoints);
+        if (arrayPoints.get(0).equals(marker.getPosition())) {
+            System.out.println("********First Point choose************");
+            countPolygonPoints();
+        }
+        return false;
+    }
+
+
+   // Read more: http://www.androidhub4you.com/2013/07/draw-polygon-in-google-map-version-2.html#ixzz434CksbYd
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       /* if(markerClicked){
 
             if(polyline != null){
                 polyline.remove();
@@ -181,5 +239,5 @@ public class MapsActivity extends AppCompatActivity
         }
 
         return true;
-    }
+    }*/
 }
