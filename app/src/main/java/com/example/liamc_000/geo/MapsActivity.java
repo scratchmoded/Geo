@@ -12,6 +12,9 @@ import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.vision.barcode.Barcode;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -21,9 +24,14 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * This demo shows how GMS Location can be used to check for changes to the users location.  The
@@ -51,11 +59,13 @@ public class MapsActivity extends AppCompatActivity
     private boolean mPermissionDenied = false;
     private ArrayList<LatLng> arrayPoints = null;
     private GoogleMap mMap;
-
     boolean markerClicked;
     PolylineOptions rectOptions;
     Polyline polyline;
-
+    Button clear,save;
+    LatLng point;
+    ParseGeoPoint geopoints;
+    ParseObject map = new ParseObject("maps");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,12 +75,45 @@ public class MapsActivity extends AppCompatActivity
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-       /*
-        mMap.setOnMapClickListener(this);
-        mMap.setOnMapLongClickListener(this);
-        mMap.setOnMarkerClickListener(this);
-        markerClicked = false;
-        */
+        clear=(Button) findViewById(R.id.mapclear);
+        save=(Button) findViewById(R.id.mapsave);
+
+
+
+
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mMap.clear();
+                arrayPoints.clear();
+                markerClicked = false;
+
+
+            }
+        });
+
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            if(arrayPoints.size()>= 3) {
+
+                    map.saveInBackground();
+
+                    Toast.makeText(getApplicationContext(),
+                            "Map Saved",
+                            Toast.LENGTH_LONG).show();
+
+            }
+                else {Toast.makeText(getApplicationContext(),
+                    "At least 3 points needed to save",
+                    Toast.LENGTH_LONG).show();}
+
+            }
+        });
+
 
 
     }
@@ -81,6 +124,7 @@ public class MapsActivity extends AppCompatActivity
 
         mMap.setOnMyLocationButtonClickListener(this);
         enableMyLocation();
+        mMap.getUiSettings().setZoomControlsEnabled(true);
     mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         mMap.setOnMapClickListener(this);
         mMap.setOnMapLongClickListener(this);
@@ -161,8 +205,17 @@ public class MapsActivity extends AppCompatActivity
     public void onMapLongClick(LatLng point) {
         mMap.addMarker(new MarkerOptions().position(point).title(point.toString()));
         arrayPoints.add(point);
+
         markerClicked = false;
-    }
+
+
+        geopoints = new ParseGeoPoint(point.latitude, point.longitude);
+
+
+
+         map.add("location",geopoints);
+
+   }
 
     public void countPolygonPoints() {
         if (arrayPoints.size() >= 3) {
@@ -173,7 +226,6 @@ public class MapsActivity extends AppCompatActivity
             polygonOptions.strokeWidth(7);
             polygonOptions.fillColor(0x4F00FFFF);
 
-            //polygonOptions.fillColor(Color.CYAN);
             Polygon polygon = mMap.addPolygon(polygonOptions);
         }
     }
@@ -212,32 +264,14 @@ public class MapsActivity extends AppCompatActivity
 
 
 
+    public void onBackPressed(){ this.finish(); }     //method to kill the class if the back button is pressed
 
 
 
 
 
 
-       /* if(markerClicked){
 
-            if(polyline != null){
-                polyline.remove();
-                polyline = null;
-            }
 
-            rectOptions.add(marker.getPosition());
-            rectOptions.color(Color.RED);
-            polyline = mMap.addPolyline(rectOptions);
-        }else{
-            if(polyline != null){
-                polyline.remove();
-                polyline = null;
-            }
 
-            rectOptions = new PolylineOptions().add(marker.getPosition());
-            markerClicked = true;
-        }
-
-        return true;
-    }*/
 }

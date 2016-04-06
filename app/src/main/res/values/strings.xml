@@ -23,6 +23,7 @@
     <string name="location_permission_denied">locationdenied</string>
     <string name="permission_required_toast">permission toast</string>
     <string name="permission_rationale_location">rationale location</string>
+    <string name="title_activity_saved_map">SavedMap</string>
 
 
 </resources>
