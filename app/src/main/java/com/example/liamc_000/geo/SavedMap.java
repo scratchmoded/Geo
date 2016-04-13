@@ -1,63 +1,67 @@
 package com.example.liamc_000.geo;
 
-import android.app.DownloadManager;
+import android.app.ListActivity;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
-import com.google.android.gms.maps.model.LatLng;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseUser;
-import com.parse.ParseQuery;
 import com.parse.FindCallback;
-import java.util.List;
-import java.util.ArrayList;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
-public class SavedMap extends AppCompatActivity {
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class SavedMap extends ListActivity {
+
+    ListView listView;
+    protected List<ParseObject> mStatus;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_map);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        final ArrayList map = new ArrayList();
-
-
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("maps");
-        query.orderByDescending("updatedAT");
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> maps, ParseException e) {
-                if (e == null) {
-                    for (int i = 0; i < maps.size(); i++) {
-                    map.add(maps.get(i).getParseObject(String.valueOf(maps)));
+        ParseUser curentUser = ParseUser.getCurrentUser();
+        if (curentUser != null) {
 
 
+            ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("maps");
+            query.findInBackground(new FindCallback<ParseObject>() {
+                @Override
+                public void done(List<ParseObject> statusobject, com.parse.ParseException e) {
+                    if (e == null) {
+                        //success
+                        mStatus = statusobject;
+                        mapadaptor adaptor = new mapadaptor(getListView().getContext(), mStatus);
+                        setListAdapter(adaptor);
 
+                    } else {
+                        //there was a problem
                     }
-
-                    ListView mapListView=(ListView) findViewById(R.id.mapListView);
-                    ArrayAdapter <String> mapsArrayAdapter = new ArrayAdapter<String>(SavedMap.this,
-                            R.layout.map_list_items,map);
-
-
-
-
-                            mapListView.setAdapter(mapsArrayAdapter);
-
                 }
-            }
+            });
 
 
-        });
+        }
+
 
     }
 }
+
+
+
+
+
+
+

@@ -24,6 +24,8 @@
     <string name="permission_required_toast">permission toast</string>
     <string name="permission_rationale_location">rationale location</string>
     <string name="title_activity_saved_map">SavedMap</string>
+    <string name="title_activity_track_map">TrackMap</string>
+    <string name="title_activity_splash">splash</string>
 
 
 </resources>

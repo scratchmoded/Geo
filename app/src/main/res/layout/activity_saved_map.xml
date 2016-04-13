@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
@@ -7,15 +7,35 @@
     android:background="@color/bg_login"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="10dp" >
+    android:padding="10dp"
+    android:weightSum="1">
 
 
-    <ListView
+   <TextView
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:id="@+id/usernamehp"
+       android:text="Username"
+       android:layout_gravity="center_horizontal" />
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/mapListView"
-        android:layout_gravity="center_horizontal"
-        android:textColor="#fdfcfc"
-        android:clickable="false"
-        android:contextClickable="false" />
-</LinearLayout>
+        android:id="@+id/createdon"
+        android:text="Created on"
+        android:layout_below="@+id/usernamehp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.90"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/createdon"
+        android:layout_alignEnd="@+id/createdon" />
+
+</RelativeLayout>

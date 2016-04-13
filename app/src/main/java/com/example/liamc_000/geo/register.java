@@ -35,7 +35,7 @@ public class register extends Activity {
 
 
         fn= (EditText) findViewById(R.id.firstnamereg);       //assigning ids to the variables
-        sn= (EditText) findViewById(R.id.surnamereg);
+        //sn= (EditText) findViewById(R.id.surnamereg);
         email= (EditText) findViewById(R.id.emailreg);
         password= (EditText) findViewById(R.id.passwordreg);
 
@@ -47,19 +47,19 @@ public class register extends Activity {
 
 
                 String getInput = fn.getText().toString();       //assigning the text input to the various strings
-                String getInput2 = sn.getText().toString();
+                //String getInput2 = sn.getText().toString();
                 String getInput3 = email.getText().toString();
                 String getInput4 = password.getText().toString();
 
                 if (getInput == null || getInput.trim().equals("")){
 
-                    Toast.makeText(getBaseContext(), "Please enter Name", Toast.LENGTH_LONG).show();   //if text input is blank a toast is displayed
+                    Toast.makeText(getBaseContext(), "Please enter Username", Toast.LENGTH_LONG).show();   //if text input is blank a toast is displayed
                 }
 
-                else if(getInput2 == null || getInput2.trim().equals("")){
+               // else if(getInput2 == null || getInput2.trim().equals("")){
 
-                    Toast.makeText(getBaseContext(), "Please enter Email", Toast.LENGTH_LONG).show();
-                }
+                 //   Toast.makeText(getBaseContext(), "Please enter Email", Toast.LENGTH_LONG).show();
+                //}
 
                 else if(getInput3 == null || getInput3.trim().equals("")){
 

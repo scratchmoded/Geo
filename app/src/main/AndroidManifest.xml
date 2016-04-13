@@ -99,11 +99,15 @@
             android:label="@string/title_activity_saved_map"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.saved"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
+                <action android:name="android.intent.action.saved" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
+        <activity
+            android:name=".splash"
+            android:label="@string/title_activity_splash"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
