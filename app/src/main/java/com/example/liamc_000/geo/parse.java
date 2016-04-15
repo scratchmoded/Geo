@@ -6,7 +6,10 @@ package com.example.liamc_000.geo;
 import com.parse.Parse;
 import com.parse.ParseACL;
 
+import com.parse.ParseInstallation;
+import com.parse.ParsePush;
 import com.parse.ParseUser;
+import com.parse.PushService;
 
 import android.app.Application;
 
@@ -20,6 +23,10 @@ public class parse  extends Application {
         Parse.enableLocalDatastore(this);
         // Add your initialization code here
         Parse.initialize(this, "jd32J9391VFtDrdkOAhScH06AZH5qI6qd6TxiQOP", "v9c4UIaCm0B9iEzY2DYVJfRPIOs2nJupa8yjw7ub");
+
+        ParseInstallation.getCurrentInstallation().saveInBackground();
+
+        //ParsePush.subscribeInBackground("the_channel_name");
 
         ParseUser.enableAutomaticUser();
         ParseACL defaultACL = new ParseACL();

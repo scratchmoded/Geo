@@ -22,7 +22,7 @@ import com.parse.ParseException;
 public class content extends Activity {
 
 
-    Button newmap, smap, groups;
+    Button newmap, smap, groups,logout;
 
 
 
@@ -35,7 +35,7 @@ public class content extends Activity {
         newmap=(Button)findViewById(R.id.NewMapBtn);
         smap=(Button)findViewById(R.id.SavedMapBtn);
         groups=(Button)findViewById(R.id.GroupsBtn);
-
+        logout=(Button)findViewById(R.id.logoutbtn);
 
         newmap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +65,14 @@ public class content extends Activity {
             });
 
 
-
+            logout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                  ParseUser.getCurrentUser().logOut();
+                    Intent intent=new Intent(v.getContext(),MainActivity.class);
+                    startActivityForResult(intent,0);
+                }
+            });
 
 
 

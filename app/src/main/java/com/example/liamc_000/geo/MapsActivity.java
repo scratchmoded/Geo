@@ -18,8 +18,9 @@ import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.android.gms.vision.barcode.Barcode;
-import com.google.maps.android.PolyUtil;
+//import com.google.android.gms.vision.barcode.Barcode;
+//import com.google.maps.android.PolyUtil;
+import com.parse.Parse;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 
@@ -27,7 +28,9 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import com.google.android.gms.location.LocationListener;
+import com.parse.ParsePush;
 import com.parse.ParseUser;
+import com.parse.PushService;
 
 import android.location.Location;
 import android.os.Bundle;
@@ -268,16 +271,20 @@ public class MapsActivity extends AppCompatActivity
             polygonOptions.fillColor(0x4F00FFFF);
 
             Polygon polygon = mMap.addPolygon(polygonOptions);
+            ParseUser currentuser=ParseUser.getCurrentUser();
+            String currentusername= currentuser.getUsername();
 
-            for (int i = 0; i < 100; i++) {
+           // for (int i = 0; i < 100; i++) {
                 pointInPolygon(point, polygon);
                 if (pointInPolygon(point, polygon) == true) {
-                    Toast.makeText(this, "point inside", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "You are inside the area", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(this, "point outside", Toast.LENGTH_SHORT).show();
-
+                    Toast.makeText(this, "You are now outside the marked area!", Toast.LENGTH_SHORT).show();
+                    ParsePush mypush= new ParsePush();
+                    mypush.setMessage(currentusername + " has left the area!");
+                    mypush.sendInBackground();
                 }
-            }
+            //}
 
         }
     }

@@ -26,9 +26,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_main);
 
-        //Parse.enableLocalDatastore(this);
-
-        //Parse.initialize(this,"jd32J9391VFtDrdkOAhScH06AZH5qI6qd6TxiQOP", "v9c4UIaCm0B9iEzY2DYVJfRPIOs2nJupa8yjw7ub");
 
 
         login= (Button) findViewById(R.id.btnLogin);

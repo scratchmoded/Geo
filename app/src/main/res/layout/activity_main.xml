@@ -57,6 +57,19 @@
             android:textStyle="bold"
             android:textSize="30dp" />
 
+        <Button
+            android:id="@+id/logoutbtn"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:background="#a1bcb3"
+
+            android:text="Logout"
+            android:textColor="#fdfcfc"
+            android:elevation="10dp"
+            android:textStyle="bold"
+            android:textSize="30dp" />
+
     </LinearLayout>
 
 
